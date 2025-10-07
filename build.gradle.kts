@@ -22,7 +22,7 @@ idea {
 dependencies {
     implementation("com.github.ajalt.clikt:clikt:5.0.3")
     testImplementation("io.kotest:kotest-framework-engine:6.0.3")
-    testImplementation("io.kotest:kotest-runner-junit5:6.0.0.M4")
+    testImplementation("io.kotest:kotest-runner-junit5:6.0.3")
 }
 
 tasks.test {
