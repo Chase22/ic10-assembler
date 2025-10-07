@@ -26,6 +26,7 @@ dependencies {
 }
 
 tasks.test {
+    outputs.upToDateWhen { false }
     useJUnitPlatform()
 }
 
