@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.20"
-    id("io.kotest") version "6.0.0.M4"
+    id("io.kotest") version "6.0.3"
     `jvm-test-suite`
     idea
 }
