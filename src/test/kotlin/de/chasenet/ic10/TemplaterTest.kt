@@ -30,7 +30,6 @@ class TemplaterTest: ShouldSpec({
             val input = "hello \${world}"
             shouldThrow<IllegalArgumentException> {
                 Templater.template(input, emptyMap())
-
             }
         }
     }

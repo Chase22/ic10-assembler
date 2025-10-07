@@ -1,6 +1,7 @@
 package de.chasenet.ic10
 
 import java.nio.file.Path
+import kotlin.io.path.Path
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 
@@ -46,7 +47,7 @@ class Assembler {
             throw IllegalArgumentException("INCLUDE requires exactly 1 parameter: filename")
         }
         val includeFile = params[0]
-        val includePath = file.parent.resolve(Path.of(includeFile))
+        val includePath = file.parent.resolve(Path(includeFile))
         if (!includePath.exists()) {
             throw IllegalArgumentException("Included file does not exist: $includePath")
         }

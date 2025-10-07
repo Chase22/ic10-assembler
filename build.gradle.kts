@@ -57,5 +57,5 @@ tasks.jar {
 }*/
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(11)
 }
