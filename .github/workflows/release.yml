@@ -1,0 +1,40 @@
+name: Publish release
+on:
+  release:
+    types:
+      - published
+      - prereleased
+
+jobs:
+  build-and-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Parse version from tag
+        id: version
+        uses: release-kit/semver@v2
+
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-disabled: true # Rerun all tasks to ensure a full release build
+
+      - name: Build
+        run: ./gradlew clean build -Pversion=${{ steps.version.outputs.full }}
+
+      - name: Upload files to release
+        uses: svenstaro/upload-release-action@2.11.2
+        with:
+          file: 'build/libs/ic10-assembler.jar'
+          make_latest: false
+          overwrite: true
