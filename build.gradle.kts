@@ -1,12 +1,16 @@
+
 plugins {
     kotlin("jvm") version "2.2.20"
     id("io.kotest") version "6.0.3"
     `jvm-test-suite`
     idea
+    application
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 group = "com.rewe.digital.gradle"
 version = "1.0-SNAPSHOT"
+val MAIN_CLASS_NAME = "de.chasenet.ic10.CLIKt"
 
 repositories {
     mavenCentral()
@@ -30,25 +34,45 @@ tasks.test {
     useJUnitPlatform()
 }
 
+application {
+    mainClass = MAIN_CLASS_NAME
+}
+
 tasks.register<JavaExec>("runApp") {
     group = "build"
     classpath = sourceSets.main.get().runtimeClasspath
 
-    mainClass = "de.chasenet.ic10.CLIKt"
+    mainClass = MAIN_CLASS_NAME
 }
 
-tasks.jar {
+tasks.shadowJar {
     manifest {
-        attributes["Main-Class"] = "de.chasenet.ic10.CLIKt"
+        attributes["Main-Class"] = MAIN_CLASS_NAME
         attributes["Implementation-Title"] = project.name
         attributes["Implementation-Version"] = project.version
     }
 
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
     archiveFileName = "${project.name}.jar"
+}
+
+distributions {
+    this.shadow {
+        this.distributionBaseName = project.name
+    }
+}
+
+val copyJarToDist by tasks.registering(Copy::class) {
+    dependsOn(tasks.shadowJar, tasks.shadowDistZip)
+    from(tasks.shadowJar.map { it.archiveFile })
+    into(tasks.shadowDistZip.flatMap { it.destinationDirectory })
+}
+
+tasks.assembleShadowDist {
+    finalizedBy(copyJarToDist)
+}
+
+tasks.jar {
+    enabled = false
 }
 
 kotlin {
