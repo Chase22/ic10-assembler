@@ -51,12 +51,6 @@ tasks.jar {
     archiveFileName = "${project.name}.jar"
 }
 
-/*tasks.processResources {
-    filesMatching("version.txt") {
-        expand("version" to project.version)
-    }
-}*/
-
 kotlin {
     jvmToolchain(11)
 }
