@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew clean assembleShadowDist -Pversion=${{ steps.version.outputs.full }}
 
       - name: Upload files to release
-        uses: svenstaro/upload-release-action@2.11.2
+        uses: svenstaro/upload-release-action@2.11.3
         with:
           file: 'build/distributions/*'
           file_glob: true
