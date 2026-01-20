@@ -24,7 +24,7 @@ idea {
 }
 
 dependencies {
-    implementation("com.github.ajalt.clikt:clikt:5.0.3")
+    implementation("com.github.ajalt.clikt:clikt:5.1.0")
     testImplementation("io.kotest:kotest-framework-engine:6.1.0")
     testImplementation("io.kotest:kotest-runner-junit5:6.1.0")
 }
